@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
-import authRoutes from "../src/api/auth/auth.route"
+import authRoutes from "./api/auth/auth.route";
+import roomRoutes from "./api/rooms/room.route"
 import cors from "cors"
 const app = express();
 
@@ -12,5 +13,6 @@ app.get('/', (req: Request, res: Response) => {
 }) 
 
 app.use('/api/auth', authRoutes)
+app.use('/api/rooms', roomRoutes);
 
 export default app;
