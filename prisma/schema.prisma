@@ -35,6 +35,7 @@ model Room {
 
 model Message {
   id String @id @default(cuid())
+  content String
   authorId String 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   roomId String
