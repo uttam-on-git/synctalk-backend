@@ -14,12 +14,15 @@ export const getRooms = async (req: Request, res: Response) => {
     }
 }
 
-export const createRoom = (req: Request, res:Response) => {
+export const createRoom = async (req: Request, res:Response) => {
     const {name, description} = req.body;
+    console.log(name);
     const userId = req.user!.id;
 
+    console.log(userId)
+
     try {
-        const newRoom = prisma.room.create({
+        const newRoom = await prisma.room.create({
             data: {
                 name,
                 description,
@@ -28,6 +31,7 @@ export const createRoom = (req: Request, res:Response) => {
                 }
             }
         });
+        console.log(newRoom)
         res.status(201).json(newRoom);
     } catch (error) {
         // prisma constrain voilation > room name already exists 
