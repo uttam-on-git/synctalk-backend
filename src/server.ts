@@ -10,9 +10,13 @@ const PORT = process.env.PORT || 3001
 
 const server = http.createServer(app)
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL
+];
+
 const io = new Server(server, {
     cors: {
-        origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+        origin: allowedOrigins.filter(Boolean) as string[],
         methods: ["GET", "POST"]
     }
 })
