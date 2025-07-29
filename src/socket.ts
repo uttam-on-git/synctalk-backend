@@ -11,6 +11,18 @@ export const setupSocketHandlers = (io: Server) => {
     io.on("connection", (socket: Socket) => {
         console.log(`A user connected: ${socket.id}`);
 
+        //when a user select the room, they should join to the server
+        socket.on('joinRoom', (roomId: string) => {
+            socket.join(roomId);
+            console.log(`User ${socket.id} joined room ${roomId}`);
+        });
+
+        //when they leave
+        socket.on('leaveRoom', (roomId: string) => {
+            socket.leave(roomId);
+            console.log(`User ${socket.id} left room ${roomId}`);
+        });
+
         socket.on("sendMessage", async (payload: NewMessagePayload) => {
             try {
                 const newMessage = await prisma.message.create({
@@ -28,7 +40,7 @@ export const setupSocketHandlers = (io: Server) => {
                         }
                     }
                 });
-                io.emit('newMessage', newMessage)
+                io.to(payload.roomId).emit('newMessage', newMessage);
             } catch (error) {
                 console.error('Error handling new message:', error);
                 socket.emit('error', 'Failed to send message.');

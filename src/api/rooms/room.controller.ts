@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../lib/prisma";
+import { Server } from "http";
 
 export const getRooms = async (req: Request, res: Response) => {
     try {
@@ -31,6 +32,11 @@ export const createRoom = async (req: Request, res:Response) => {
                 }
             }
         });
+        // get the io instance from the app
+        const io: Server = req.app.get('io');
+        
+        // emit event to notify to all
+        io.emit('newRoom', newRoom);
         console.log(newRoom)
         res.status(201).json(newRoom);
     } catch (error) {

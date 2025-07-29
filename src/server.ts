@@ -17,6 +17,9 @@ const io = new Server(server, {
     }
 })
 
+// Make the io instance available to other parts of the app
+app.set('io', io);
+
 setupSocketHandlers(io);
 
 server.listen(PORT, () => {
