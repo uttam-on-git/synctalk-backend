@@ -48,7 +48,7 @@ Follow these instructions to get a local copy of the backend up and running.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/synctalk-backend.git](https://github.com/your-username/synctalk-backend.git)
+    git clone https://github.com/uttam-on-git/synctalk-backend.git
     cd synctalk-backend
     ```
 
