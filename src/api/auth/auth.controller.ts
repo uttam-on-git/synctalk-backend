@@ -25,10 +25,12 @@ export const register = async (req: Request, res: Response) => {
                 password: hashedPassword
             }
         })
+        const payload = { id: user.id, username: user.username };
+        const token = jwt.sign(payload, process.env.JWT_SECRET!, {
+            expiresIn: '7d',
+        });
         res.status(200).json({
-            id: user.id,
-            username: user.username,
-            email: user.email,
+            token,
         })
     } catch (error) {
         res.status(500).json({
